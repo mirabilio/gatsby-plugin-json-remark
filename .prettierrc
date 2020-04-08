@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "plugin:promise/recommended",
+    "plugin:prettier/recommended"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "name": "gatsby-plugin-json-remark",
+  "description": "A GatsbyJs plugin that transforms markdown content from JSON files. The new MarkdownRemark nodes are placed inside the original `gatsby-transformer-json` node tree. Transformed HTML is also populated in new fields with \"Html\" appended to field names.",
+  "main": "index.js",
+  "author": "Pat Nolan",
+  "license": "MIT",
+  "peerDependencies": {
+    "gatsby": "^2.16"
+  },
+  "dependencies": {
+    "lodash.camelcase": "^4.3",
+    "lodash.upperfirst": "^4.3.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "cross-env": "^7.0.2",
+    "cz-conventional-changelog": "3.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-graphql": "^3.1.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "husky": "^4.2.3",
+    "prettier": "^2.0.2",
+    "remark-cli": "^7.0.1",
+    "remark-preset-lint-recommended": "^3.0.4",
+    "semantic-release": "^17.0.4"
+  },
+  "scripts": {
+    "build": "babel src --out-dir ./",
+    "prepack": "cross-env NODE_ENV=production yarn build",
+    "watch": "babel -w src --out-dir .",
+    "semantic-release": "semantic-release",
+    "release": "yarn prepack && semantic-release",
+    "release-dry-run": "yarn prepack && semantic-release --dry-run"
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
