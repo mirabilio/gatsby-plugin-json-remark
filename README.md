@@ -14,11 +14,11 @@
 
 This plugin piggybacks off of the existing `gatsby-transformer-remark` plugin configuration in `gatsby-config.json` and honors all additional parsing provided by its sub-plugins (e.g. `gatsby-remark-prismjs`). This is accomplished on the *Html fields by retrieving the HTML from the MarkdownRemark nodes' own `html` resolvers.
 
-The ability to place markdown in structured JSON files comes in handy for CMS software that stores its content inside JSON files. In [TinaCMS](https://tinacms.org/) for example, `gatsby-plugin-json-remark` can be used embed markdown in the structured page content using [TinaCMS' markdown blocks feature](https://tinacms.org/docs/fields/blocks).
+The ability to place markdown in structured JSON files comes in handy for CMS software that stores its content inside JSON files. In [TinaCMS](https://tinacms.org/) for example, `gatsby-plugin-json-remark` can be used to embed markdown in the structured page content using [TinaCMS' markdown blocks feature](https://tinacms.org/docs/fields/blocks).
 
 > Please create an issue for question, bug, idea, etc. If this plugin doesn't fit your particular use case but you feel that it should, please open an issue to request the new feature. PRs welcome 👍.
 
-**Note**: It is recommended to use `gatsby-remark-remove-root-p-tag` in tandem with this plugin. `gatsby-transformer-remark` will often automatically wrap a paragraph node around markdown snippets, resulting in an unintended `<p>` tag wrapping the parsed HTML. `gatsby-remark-remove-root-p-tag` will remove the paragraph parent from the markdown AST. 
+**Note**: It is recommended to use `gatsby-remark-remove-root-p-tag` in tandem with this plugin. `gatsby-transformer-remark` will often automatically wrap a paragraph node around markdown snippets, resulting in an unintended `<p>` tag wrapping the transformed HTML. `gatsby-remark-remove-root-p-tag` will remove the paragraph parent from the markdown AST. 
 
 ## Install
 
