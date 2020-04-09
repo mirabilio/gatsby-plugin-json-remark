@@ -10,9 +10,7 @@
   ],
   "author": "Pat Nolan",
   "license": "MIT",
-  "peerDependencies": {
-    "gatsby": "^2.16"
-  },
+  "peerDependencies": {},
   "dependencies": {
     "lodash.camelcase": "^4.3",
     "lodash.upperfirst": "^4.3.1"
