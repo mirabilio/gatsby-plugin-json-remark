@@ -1,3 +1,13 @@
+# 1.0.0 (2020-04-09)
+
+
+### Bug Fixes
+
+* **build:** babel results not found ([db8e726](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/db8e726a3915c4a084f9ae6b3cbe8921ace42980))
+* **build:** build issue copying assets to root ([fee9786](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/fee97869ceeee8fed7c09738830452111609f98a))
+* **readme.md:** force npm publication ([b17311c](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/b17311cc261151de082adad2aa8c09a98d75cac3))
+* **release:** release initial beta ([a0d34eb](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/a0d34ebf58435e9d6122ab05c5014d962f58f83e))
+
 # [1.0.0-beta.2](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2020-04-09)
 
 
