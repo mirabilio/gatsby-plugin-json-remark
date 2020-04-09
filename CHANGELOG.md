@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.0.2...v1.0.3) (2020-04-09)
+
+
+### Bug Fixes
+
+* **core:** fix TypeError thrown for Array property type ([ca0874a](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/ca0874ac0ec1b5b3f802d71516ee7e323b2e4c3c)), closes [#3](https://github.com/mirabilio/gatsby-plugin-json-remark/issues/3)
+
 ## [1.0.2](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.0.1...v1.0.2) (2020-04-09)
 
 
