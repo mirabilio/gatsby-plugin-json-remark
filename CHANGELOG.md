@@ -1,3 +1,10 @@
+# [1.0.0-beta.4](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2020-04-09)
+
+
+### Bug Fixes
+
+* **build:** babel results not found ([db8e726](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/db8e726a3915c4a084f9ae6b3cbe8921ace42980))
+
 # [1.0.0-beta.2](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2020-04-09)
 
 
