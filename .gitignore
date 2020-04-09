@@ -1,6 +1,6 @@
 # build
-gatsby-*.js
-__tests__/*
+# gatsby-*.js
+# __tests__/*
 
 # Visual Studio
 *.code-workspace
