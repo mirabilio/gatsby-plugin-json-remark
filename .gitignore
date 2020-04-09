@@ -1,5 +1,5 @@
 # build
-/gatsby-*.js
+gatsby-*.js
 __tests__/*
 
 # Visual Studio
