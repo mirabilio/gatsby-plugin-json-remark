@@ -74,10 +74,8 @@ const createJsonMarkdownPropertyNodes = ({
             const treeNodePromise = createNode(propNode).then((result) => {
               const makeStorageObj =
                 typeof arrayIndex === "undefined" ? () => new Map() : () => [];
-
               const a = typeMods.get(fileNode.absolutePath);
               const aif = a.has(gatsbyType);
-
               if (!aif)
                 typeMods
                   .get(fileNode.absolutePath)
@@ -313,7 +311,7 @@ exports.createResolvers = ({ createResolvers, intermediateSchema }) => {
 
   for (const [typeMap] of typeMods) {
     for (const [type, collectn] of typeMods.get(typeMap)) {
-      resolvers[type] = {};
+      if (!resolvers[type]) resolvers[type] = {};
 
       if (Array.isArray(collectn)) {
         const _res = collectn.reduce((_resolvers, obj) => {
