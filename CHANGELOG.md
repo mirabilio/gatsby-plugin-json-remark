@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.0.3...v1.0.4) (2020-04-09)
+
+
+### Bug Fixes
+
+* **core:** fix [#4](https://github.com/mirabilio/gatsby-plugin-json-remark/issues/4) ([1ee009b](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/1ee009bc95669a2257838832c2fc8a343b741d40))
+
 ## [1.0.3](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.0.2...v1.0.3) (2020-04-09)
 
 
