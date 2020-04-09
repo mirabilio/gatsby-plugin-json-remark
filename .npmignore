@@ -3,7 +3,6 @@ src/
 .github/
 
 # build
-gatsby-*.js
 __tests__/*
 
 # Visual Studio
