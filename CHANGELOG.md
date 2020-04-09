@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.0.1...v1.0.2) (2020-04-09)
+
+
+### Bug Fixes
+
+* **package:** force package deployment ([8ed5837](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/8ed5837fb8a3e6974024163f4618797bbbdf0062)), closes [#2](https://github.com/mirabilio/gatsby-plugin-json-remark/issues/2)
+
 ## [1.0.1](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.0.0...v1.0.1) (2020-04-09)
 
 
