@@ -97,7 +97,7 @@ A list of JSON keys that will be ignored in the source JSON files. This is usefu
 ### `gatsby-config.js` Dependencies
 
 + `gatsby-transformer-remark` 
-+ `gatsby-source-filesystem` *Configured with at least one directory containing JSON files. The `gatsby-plugin-json-remark` `paths` option must contain at least a directory or a file that is also configured with `gatsby-source-filesystem`. Otherwise, there will be no JSON nodes to process.*
++ `gatsby-source-filesystem` *Configured with at least one directory containing JSON files. The `paths` option of `gatsby-plugin-json-remark` must contain at least a directory or a file that is also configured with `gatsby-source-filesystem`. Otherwise, there will be no JSON nodes to process.*
 
 ### Environment
 + Node >=12.16.1
