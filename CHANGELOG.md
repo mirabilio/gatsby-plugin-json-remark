@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.0.0...v1.0.1) (2020-04-09)
+
+
+### Bug Fixes
+
+* **core:** fix processing of repeat field names in multiple json files ([7b40181](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/7b40181eaa319c8f571d386ec75c856a34a5399b)), closes [#1](https://github.com/mirabilio/gatsby-plugin-json-remark/issues/1)
+
 # 1.0.0 (2020-04-09)
 
 
