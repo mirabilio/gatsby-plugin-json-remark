@@ -68,35 +68,29 @@ const createJsonMarkdownPropertyNodes = ({
             };
             propNode.internal.contentDigest = createContentDigest(
               JSON.stringify(propNode)
-            ); // sets object reference on new tree via closure.
-            // TODO: refactor
+            );
 
+            // sets object reference on new tree via closure.
+            // TODO: refactor
             const treeNodePromise = createNode(propNode).then((result) => {
               const makeStorageObj =
                 typeof arrayIndex === "undefined" ? () => new Map() : () => [];
-              const a = typeMods.get(fileNode.absolutePath);
-              const aif = a.has(gatsbyType);
-              if (!aif)
+
+              if (!typeMods.get(fileNode.absolutePath).has(gatsbyType))
                 typeMods
                   .get(fileNode.absolutePath)
                   .set(gatsbyType, makeStorageObj());
-              const file = typeMods.get(fileNode.absolutePath);
+              const gatsbyTypeCollection = typeMods
+                .get(fileNode.absolutePath)
+                .get(gatsbyType);
 
               if (typeof arrayIndex === "undefined") {
-                file.get(gatsbyType).set(key, result[0].id);
+                gatsbyTypeCollection.set(key, result[0].id);
               } else {
-                if (!file.get(gatsbyType)[arrayIndex])
-                  file.get(gatsbyType)[arrayIndex] = {};
-                file.get(gatsbyType)[arrayIndex][key] = result[0].id;
-              } // if (!typeMods.has(gatsbyType))
-              //   typeMods.set(gatsbyType, makeStorageObj());
-              // if (typeof arrayIndex === "undefined") {
-              //   typeMods.get(gatsbyType).set(key, result[0].id);
-              // } else {
-              //   if (!typeMods.get(gatsbyType)[arrayIndex])
-              //     typeMods.get(gatsbyType)[arrayIndex] = {};
-              //   typeMods.get(gatsbyType)[arrayIndex][key] = result[0].id;
-              // }
+                if (!gatsbyTypeCollection[arrayIndex])
+                  gatsbyTypeCollection[arrayIndex] = {};
+                gatsbyTypeCollection[arrayIndex][key] = result[0].id;
+              }
 
               _resultObj.treeNewState.treeNode[key] = {};
               _resultObj.treeNewState.treeNode[key][
@@ -192,10 +186,12 @@ exports.onCreateNode = async (nodeApiArgs, pluginOptions = {}) => {
       pathsExclude,
     }) // || node.path !== "/about"
   )
-    return; // gatsby-transformer-json built/rebuilt a json node.
-  //  therefore, delete existing resolver data for that file.
+    return;
 
+  // gatsby-transformer-json built/rebuilt a json node.
+  //  therefore, delete existing resolver data for that file.
   typeMods.delete(jsonParent.absolutePath);
+
   const treeNode = JSON.parse(await loadNodeContent(jsonParent));
   const resultObj = createJsonMarkdownPropertyNodes({
     transformerJsonNode: node,
@@ -233,44 +229,10 @@ exports.onCreateNode = async (nodeApiArgs, pluginOptions = {}) => {
     });
     return parentPromise;
   });
-}; // TODO: refactor common code
+};
 
 exports.createResolvers = ({ createResolvers, intermediateSchema }) => {
   const html = () => {
-    return {
-      type: "String",
-
-      async resolve(source, _, context, info) {
-        const origPropValue =
-          source[info.fieldName.substring(0, info.fieldName.length - 4)];
-        if (typeof origPropValue === "undefined") return;
-        const parentId = context.nodeModel.findRootNodeAncestor(source);
-        const parentFile = await context.nodeModel.getNodeById({
-          id: parentId.id,
-        });
-        const fileMap = typeMods.get(parentFile.absolutePath);
-        if (!fileMap) return;
-        const gatsbyType = fileMap.get(info.parentType.name);
-        if (!gatsbyType) return;
-        const id = gatsbyType.get(
-          info.fieldName.substring(0, info.fieldName.length - 4)
-        );
-        const resolver = info.schema.getType("MarkdownRemark").getFields()[
-          "html"
-        ].resolve;
-        const node = await context.nodeModel.getNodeById({
-          id,
-        });
-        const html = await resolver(node, {}, context, {
-          ...info,
-          fieldName: "html",
-        });
-        return html;
-      },
-    };
-  };
-
-  const htmlOfArray = (objKey, arry) => {
     return {
       type: "String",
 
@@ -281,22 +243,35 @@ exports.createResolvers = ({ createResolvers, intermediateSchema }) => {
           ] === "undefined"
         )
           return;
-        const parentId = context.nodeModel.findRootNodeAncestor(source);
+
         const parentFile = await context.nodeModel.getNodeById({
-          id: parentId.id,
+          id: context.nodeModel.findRootNodeAncestor(source).id,
         });
-        const fileMap = typeMods.get(parentFile.absolutePath);
-        if (!fileMap) return;
-        const gatsbyType = fileMap.get(info.parentType.name);
+
+        if (
+          !typeMods.get(parentFile.absolutePath) ||
+          !typeMods.get(parentFile.absolutePath).get(info.parentType.name)
+        )
+          return;
+
+        const gatsbyType = typeMods
+          .get(parentFile.absolutePath)
+          .get(info.parentType.name);
         if (!gatsbyType) return;
+
+        const id = !isNum(info.path.prev.key)
+          ? gatsbyType.get(
+              info.fieldName.substring(0, info.fieldName.length - 4)
+            )
+          : gatsbyType[info.path.prev.key][
+              info.fieldName.substring(0, info.fieldName.length - 4)
+            ];
+
         const resolver = info.schema.getType("MarkdownRemark").getFields()[
           "html"
         ].resolve;
         const node = await context.nodeModel.getNodeById({
-          id:
-            gatsbyType[info.path.prev.key][
-              info.fieldName.substring(0, info.fieldName.length - 4)
-            ],
+          id,
         });
         const html = await resolver(node, {}, context, {
           ...info,
@@ -320,7 +295,7 @@ exports.createResolvers = ({ createResolvers, intermediateSchema }) => {
             ...Object.keys(obj).reduce((__resolvers, objKey) => {
               if (_resolvers[objKey.concat("Html")]) return __resolvers;
               __resolvers[objKey.concat("Html")] = {
-                ...htmlOfArray(objKey, collectn),
+                ...html(),
               };
               return __resolvers;
             }, {}),
@@ -330,7 +305,6 @@ exports.createResolvers = ({ createResolvers, intermediateSchema }) => {
         resolvers[type] = { ...resolvers[type], ..._res };
       } else {
         for (const [prop] of collectn) {
-          // resolvers[type][prop.concat("Html")] = { ...html(id) };
           resolvers[type][prop.concat("Html")] = { ...html() };
         }
       }

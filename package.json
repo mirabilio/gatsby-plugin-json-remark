@@ -36,8 +36,10 @@
     "semantic-release": "^17.0.4"
   },
   "scripts": {
-    "build": "babel src --out-dir ./",
+    "dev": "yarn build && yarn unlink && yarn link",
+    "build": "babel src --out-dir ./ && yarn prettier",
     "prepack": "cross-env NODE_ENV=production yarn build",
+    "prettier": "prettier --write .",
     "watch": "babel -w src --out-dir .",
     "semantic-release": "semantic-release",
     "release": "yarn prepack && semantic-release",

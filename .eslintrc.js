@@ -3,20 +3,17 @@ module.exports = {
     es6: true,
     node: true,
   },
-  plugins: [
-    'promise',
-    'prettier',
-  ],
+  plugins: ["promise", "prettier"],
   extends: [
-    'eslint:recommended', 
-    'google',
-    'plugin:promise/recommended',
-    'plugin:prettier/recommended',
+    "eslint:recommended",
+    "google",
+    "plugin:promise/recommended",
+    "plugin:prettier/recommended",
   ],
   rules: {
-    'prettier/prettier': 'error',
+    "prettier/prettier": "error",
   },
   parserOptions: {
-    ecmaVersion: 2018
-  } 
+    ecmaVersion: 2018,
+  },
 };
