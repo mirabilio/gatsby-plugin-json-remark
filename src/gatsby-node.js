@@ -8,8 +8,6 @@ const {
 } = require("./constants");
 const utils = require("./utils");
 
-// TODO:
-// - remove a file's objects from state when it  is deleted from disk
 exports.onCreateNode = async (nodeApiArgs, pluginOptions = {}) => {
   const {
     node,
