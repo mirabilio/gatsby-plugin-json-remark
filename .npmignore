@@ -2,11 +2,21 @@ yarn.lock
 src/
 .github/
 
-# build
-__tests__/*
+# test
+src/__fixtures__/
+
+# build files
+.eslintrc.js
+.gitignore
+.prettierignore
+.releaserc.json
+babel.config.json
+src/*.spec.js
+jest.config.js
 
 # Visual Studio
 *.code-workspace
+.vscode
 
 # Logs
 logs

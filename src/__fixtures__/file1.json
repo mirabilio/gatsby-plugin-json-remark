@@ -1,0 +1,21 @@
+{
+  "content1": "**file1.content1**",
+  "content2": "**file1.content2**",
+  "someObject": {
+    "content1": "**file1SomeObject.content1**",
+    "someObject": {
+      "content1": "**file1SomeObjectSomeObject.content1**"
+    },
+    "someArrayOfObjects": [
+      {
+        "content1": "**file1SomeObjectSomeArrayOfObjects.content1**",
+        "content2": "**file1SomeObjectSomeArrayOfObjects.content2**",
+        "content3": "**file1SomeObjectSomeArrayOfObjects.content3**"
+      },
+      {
+        "content1": "**file1SomeObjectSomeArrayOfObjects.content1**",
+        "content2": "**file1SomeObjectSomeArrayOfObjects.content2**"
+      }
+    ]
+  }
+}

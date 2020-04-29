@@ -2,18 +2,27 @@
   "name": "gatsby-plugin-json-remark",
   "description": "A GatsbyJs plugin that transforms markdown content from JSON files. The new MarkdownRemark nodes are placed inside the original `gatsby-transformer-json` node tree. Transformed HTML is also populated in new fields with \"Html\" appended to field names.",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mirabilio/gatsby-plugin-json-remark"
+  },
   "keywords": [
     "gatsby",
     "gatsby-plugin",
+    "tinacms",
+    "tina-cms",
+    "cms",
     "remark",
     "markdown"
   ],
   "author": "Pat Nolan",
   "license": "MIT",
-  "peerDependencies": {},
   "dependencies": {
-    "lodash.camelcase": "^4.3",
-    "lodash.upperfirst": "^4.3.1"
+    "immer": "^6.0.3",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.isempty": "^4.4.0",
+    "lodash.merge": "^4.6.2",
+    "lodash.omit": "^4.5.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -21,15 +30,19 @@
     "@babel/preset-env": "^7.9.0",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
+    "codecov": "^3.6.5",
     "cross-env": "^7.0.2",
     "cz-conventional-changelog": "3.1.0",
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-graphql": "^3.1.1",
+    "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-promise": "^4.2.1",
+    "gatsby-core-utils": "^1.1.2",
     "husky": "^4.2.3",
+    "jest": "^25.3.0",
     "prettier": "^2.0.2",
     "remark-cli": "^7.0.1",
     "remark-preset-lint-recommended": "^3.0.4",
@@ -37,7 +50,10 @@
   },
   "scripts": {
     "dev": "yarn build && yarn unlink && yarn link",
-    "build": "babel src --out-dir ./ && yarn prettier",
+    "test": "jest",
+    "test-watch": "jest --watch",
+    "test-watch-coverage": "jest --watch --coverage",
+    "build": "babel src --out-dir ./ && yarn prettier && jest --coverage",
     "prepack": "cross-env NODE_ENV=production yarn build",
     "prettier": "prettier --write .",
     "watch": "babel -w src --out-dir .",

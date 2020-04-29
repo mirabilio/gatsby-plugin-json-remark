@@ -9,6 +9,7 @@
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![codecov](https://codecov.io/gh/mirabilio/gatsby-plugin-json-remark/branch/master/graph/badge.svg)](https://codecov.io/gh/mirabilio/gatsby-plugin-json-remark)
 
 `gatsby-plugin-json-remark` is a [GatsbyJs](https://www.gatsbyjs.org) plugin that transforms markdown content from JSON files. The new MarkdownRemark nodes are placed inside the original `gatsby-transformer-json` node tree. Transformed HTML is also populated in new node properties as the original JSON key names appended with "Html".
 

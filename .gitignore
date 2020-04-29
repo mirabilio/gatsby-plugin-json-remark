@@ -1,9 +1,14 @@
 # build
-gatsby-*.js
-__tests__/*
+# gatsby-*.js
+# *.spec.js
+/*.js
+!.eslintrc.js
+!index.js
+!jest.config.js
 
 # Visual Studio
 *.code-workspace
+.vscode
 
 # Logs
 logs

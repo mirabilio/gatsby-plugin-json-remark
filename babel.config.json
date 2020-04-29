@@ -8,5 +8,6 @@
         }
       }
     ]
-  ]
+  ],
+  "ignore": ["src/**/*.spec.js", "**/__fixtures__"]
 }
