@@ -43,26 +43,52 @@ test("file is included by filename but current file is another file. current fil
 });
 
 test("json remark property id contains all required fields", () => {
+  expect(
+    utils.createPropNodeId({
+      wholeTree: "t",
+      jsonNodeId: "j",
+      nodeType: "n",
+      absolutePath: "a",
+      gatsbyType: "g",
+      key: "k",
+    })
+  ).toBe("t j n a g 0 k");
   expect(() =>
     utils.createPropNodeId({
+      wholeTree: undefined,
+      jsonNodeId: ".",
+      nodeType: ".",
+      absolutePath: ".",
+      gatsbyType: ".",
+      index: 0,
+      key: ".",
+    })
+  ).toThrow();
+  expect(() =>
+    utils.createPropNodeId({
+      wholeTree: ".",
       jsonNodeId: undefined,
       nodeType: ".",
       absolutePath: ".",
       gatsbyType: ".",
+      index: 0,
       key: ".",
     })
   ).toThrow();
   expect(() =>
     utils.createPropNodeId({
+      wholeTree: ".",
       jsonNodeId: ".",
       nodeType: undefined,
       absolutePath: ".",
       gatsbyType: ".",
+      index: 0,
       key: ".",
     })
   ).toThrow();
   expect(() =>
     utils.createPropNodeId({
+      wholeTree: ".",
       jsonNodeId: ".",
       nodeType: ".",
       absolutePath: undefined,
@@ -72,6 +98,7 @@ test("json remark property id contains all required fields", () => {
   ).toThrow();
   expect(() =>
     utils.createPropNodeId({
+      wholeTree: ".",
       jsonNodeId: ".",
       nodeType: ".",
       absolutePath: ".",
@@ -81,6 +108,7 @@ test("json remark property id contains all required fields", () => {
   ).toThrow();
   expect(() =>
     utils.createPropNodeId({
+      wholeTree: ".",
       jsonNodeId: ".",
       nodeType: ".",
       absolutePath: ".",
@@ -88,16 +116,14 @@ test("json remark property id contains all required fields", () => {
       key: undefined,
     })
   ).toThrow();
-
   expect(() =>
     utils.createPropNodeId({
+      wholeTree: undefined,
       jsonNodeId: undefined,
       nodeType: undefined,
       absolutePath: undefined,
       gatsbyType: undefined,
       key: undefined,
     })
-  ).toThrow(
-    "Required field(s) for node ID generation are missing: jsonNodeId, nodeType, absolutePath, gatsbyType, key"
-  );
+  ).toThrow();
 });

@@ -51,8 +51,8 @@
   "scripts": {
     "dev": "yarn build && yarn unlink && yarn link",
     "test": "jest",
-    "test-watch": "jest --watch",
-    "test-watch-coverage": "jest --watch --coverage",
+    "test-watch": "jest --watchAll",
+    "test-watch-coverage": "jest --watchAll --coverage",
     "build": "babel src --out-dir ./ && yarn prettier && jest --coverage",
     "prepack": "cross-env NODE_ENV=production yarn build",
     "prettier": "prettier --write .",
@@ -70,6 +70,5 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "version": "1.0.4"
+  }
 }

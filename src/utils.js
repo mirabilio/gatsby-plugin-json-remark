@@ -207,11 +207,19 @@ exports.resolverReducer = produce((draft, action) => {
 
 const required = ([o, ...os], p, f, memo) =>
   utils.def(o) ? required(os, p, f, f(memo, p, o)) : memo;
-// add content
+
 exports.createPropNodeId = (p) => {
   p.index = utils.def(p.index) ? p.index : 0;
   const missing = required(
-    Object.keys(p),
+    [
+      "wholeTree",
+      "jsonNodeId",
+      "nodeType",
+      "absolutePath",
+      "gatsbyType",
+      "index",
+      "key",
+    ],
     p,
     (memo, p, o) => (!utils.def(p[o]) ? [...memo, o] : memo),
     []
