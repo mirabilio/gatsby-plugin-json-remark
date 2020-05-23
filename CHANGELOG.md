@@ -1,9 +1,8 @@
 # [1.1.0](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.0.4...v1.1.0) (2020-04-29)
 
-
 ### Features
 
-* **build, perf, refactor, warn messages:** refactor, add near 100% branch test coverage, warn msgs ([8cb6fbc](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/8cb6fbc81b65cf092f445e90e4cdadff7df6dffc))
+- **build, perf, refactor, warn messages:** refactor, add near 100% branch test coverage, warn msgs ([8cb6fbc](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/8cb6fbc81b65cf092f445e90e4cdadff7df6dffc))
 
 ## [1.0.4](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.0.3...v1.0.4) (2020-04-09)
 

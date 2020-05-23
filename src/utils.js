@@ -30,27 +30,20 @@ exports.createJsonMarkdownPropertyNodes = async ({
   jsonNodeId,
   absolutePath,
   gatsbyType,
+  objectPath,
   arrIndex,
   fieldNameBlacklist,
   funcs,
 }) => {
   const { createNodeId } = funcs;
   const _remarkTreeNode = cloneDeep(remarkTreeNode);
+  if (!utils.def(objectPath)) objectPath = absolutePath;
 
   for (const key of Object.keys(treeNode)) {
     if (fieldNameBlacklist.includes(key)) continue;
 
     if (typeof treeNode[key] !== "object") {
-      const propNodeIdInput = utils.createPropNodeId({
-        wholeTree: JSON.stringify(wholeTree),
-        jsonNodeId,
-        nodeType: NODE_TYPE_JSON_REMARK_PROPERTY,
-        absolutePath,
-        gatsbyType,
-        key,
-        index: arrIndex,
-      });
-      const propNodeId = createNodeId(propNodeIdInput);
+      const propNodeId = createNodeId(objectPath.concat(`.${key}`));
 
       const markdownRemarkNode = await utils.createJsonPropNode({
         propNodeId,
@@ -83,6 +76,7 @@ exports.createJsonMarkdownPropertyNodes = async ({
         remarkTreeNode: _remarkTreeNode[key],
         jsonNodeId,
         absolutePath,
+        objectPath: objectPath.concat(`.${key}`),
         gatsbyType: utils.isNum(key)
           ? gatsbyType
           : gatsbyType.concat(
