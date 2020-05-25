@@ -57,7 +57,7 @@
     "test": "jest --coverage",
     "test-watch": "jest --watchAll",
     "test-watch-coverage": "jest --watchAll --coverage",
-    "build": "babel src --out-dir ./ && yarn prettier",
+    "build": "babel src --out-dir ./ && yarn prettier && yarn jest --coverage",
     "prepack": "cross-env NODE_ENV=production yarn build",
     "prettier": "prettier --write .",
     "watch": "babel -w src --out-dir .",
