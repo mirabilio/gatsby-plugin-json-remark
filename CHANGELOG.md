@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.1.3...v1.1.4) (2020-05-25)
+
+
+### Bug Fixes
+
+* **resolver, babel:** fix name query issue, add babel configs ([5d7d895](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/5d7d89511da693f44f9490fb1d49c5cf71befb0c)), closes [#10](https://github.com/mirabilio/gatsby-plugin-json-remark/issues/10) [#5](https://github.com/mirabilio/gatsby-plugin-json-remark/issues/5)
+
 ## [1.1.3](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.1.2...v1.1.3) (2020-05-25)
 
 ### Bug Fixes
