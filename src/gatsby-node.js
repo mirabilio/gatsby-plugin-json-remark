@@ -74,8 +74,10 @@ exports.onCreateNode = async (nodeApiArgs, pluginOptions = {}) => {
 
 exports.createResolvers = ({ createResolvers, reporter }) => {
   const state = utils.storage.get(CACHE_KEY_RESOLVER);
-  if (!isEmpty(state)) createResolvers(utils.constructResolvers(state));
-  else
+  if (!isEmpty(state)) {
+    const resolvers = utils.constructResolvers(state);
+    createResolvers(resolvers);
+  } else
     reporter.warn(
       "'gatsby-plugin-json-remark' found no configured JSON fields to transform."
     );

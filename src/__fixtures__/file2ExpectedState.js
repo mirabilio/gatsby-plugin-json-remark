@@ -4,54 +4,58 @@ const state = {
       content1Html: {
         type: "String",
         resolve: () => {},
-        mIds: ["file2-k492-ask239-aski3-3i3ks"],
       },
       content3Html: {
         type: "String",
         resolve: () => {},
-        mIds: ["file2-1s91-asdf34-bfd4re-asdf32"],
       },
     },
     DirJsonSomeObject: {
       content2Html: {
         type: "String",
         resolve: () => {},
-        mIds: ["file2-thjhj-as539-as4ki3-a1i3Ab"],
       },
     },
     DirJsonSomeObjectSomeObject: {
       content1Html: {
         type: "String",
         resolve: () => {},
-        mIds: ["file2-3sfgb-df5-es43t-sdf5"],
       },
       content3Html: {
         type: "String",
         resolve: () => {},
-        mIds: ["file2-hk43-sdfg5u-66dfgh-fg5a"],
       },
     },
     DirJsonSomeObjectSomeArrayOfObjects: {
       content1Html: {
         type: "String",
         resolver: () => {},
-        mIds: ["file2-32-ask239-aski3-3i3ks"],
       },
       content3Html: {
         type: "String",
         resolver: () => {},
-        mIds: ["file2-xx5afd-sd4hb-bfd4vfdre-asggdf32"],
       },
       content2Html: {
         type: "String",
         resolver: () => {},
-        mIds: [null, "file2-56uy-gh-bfd4re-sdfg"],
       },
       content4Html: {
         type: "String",
         resolver: () => {},
-        mIds: [null, "file2-5dfg4k-h6745-ry77-jt5"],
       },
+    },
+  },
+  idsByAbsolutePath: {
+    ["/dir/file2.json"]: {
+      ["dirJson.content1Html"]: "11",
+      ["dirJson.content3Html"]: "12",
+      ["dirJson.someObject.content2Html"]: "13",
+      ["dirJson.someObject.someObject.content1Html"]: "14",
+      ["dirJson.someObject.someObject.content3Html"]: "15",
+      ["dirJson.someObject.someArrayOfObjects.0.content1Html"]: "16",
+      ["dirJson.someObject.someArrayOfObjects.0.content3Html"]: "17",
+      ["dirJson.someObject.someArrayOfObjects.1.content2Html"]: "18",
+      ["dirJson.someObject.someArrayOfObjects.1.content4Html"]: "19",
     },
   },
 };

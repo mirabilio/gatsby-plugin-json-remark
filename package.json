@@ -30,12 +30,15 @@
     "@babel/preset-env": "^7.9.0",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.0.1",
     "codecov": "^3.6.5",
     "cross-env": "^7.0.2",
     "cz-conventional-changelog": "3.1.0",
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-graphql": "^3.1.1",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-prettier": "^3.1.2",
@@ -53,13 +56,14 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-watch-coverage": "jest --watchAll --coverage",
-    "build": "babel src --out-dir ./ && yarn prettier && jest --coverage",
+    "build": "babel src --out-dir ./ && yarn prettier",
     "prepack": "cross-env NODE_ENV=production yarn build",
     "prettier": "prettier --write .",
     "watch": "babel -w src --out-dir .",
     "semantic-release": "semantic-release",
     "release": "yarn prepack && semantic-release",
-    "release-dry-run": "yarn prepack && semantic-release --dry-run"
+    "release-dry-run": "yarn prepack && semantic-release --dry-run",
+    "copy": "cp *.js /Users/patricknolan/projects/mirabilio/amyissue2/json-remark-issue/plugins/gatsby-plugin-json-remark/"
   },
   "husky": {
     "hooks": {

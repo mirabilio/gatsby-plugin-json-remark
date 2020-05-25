@@ -1,20 +1,20 @@
 module.exports = {
-  content1MarkdownRemark___NODE: "file2-k492-ask239-aski3-3i3ks",
-  content3MarkdownRemark___NODE: "file2-1s91-asdf34-bfd4re-asdf32",
+  content1MarkdownRemark___NODE: "11",
+  content3MarkdownRemark___NODE: "12",
   someObject: {
-    content2MarkdownRemark___NODE: "file2-thjhj-as539-as4ki3-a1i3Ab",
+    content2MarkdownRemark___NODE: "13",
     someObject: {
-      content1MarkdownRemark___NODE: "file2-3sfgb-df5-es43t-sdf5",
-      content3MarkdownRemark___NODE: "file2-hk43-sdfg5u-66dfgh-fg5a",
+      content1MarkdownRemark___NODE: "14",
+      content3MarkdownRemark___NODE: "15",
     },
     someArrayOfObjects: [
       {
-        content1MarkdownRemark___NODE: "file2-32-ask239-aski3-3i3ks",
-        content3MarkdownRemark___NODE: "file2-xx5afd-sd4hb-bfd4vfdre-asggdf32",
+        content1MarkdownRemark___NODE: "16",
+        content3MarkdownRemark___NODE: "17",
       },
       {
-        content2MarkdownRemark___NODE: "file2-56uy-gh-bfd4re-sdfg",
-        content4MarkdownRemark___NODE: "file2-5dfg4k-h6745-ry77-jt5",
+        content2MarkdownRemark___NODE: "18",
+        content4MarkdownRemark___NODE: "19",
       },
     ],
   },

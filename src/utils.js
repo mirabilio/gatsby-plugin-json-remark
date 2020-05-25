@@ -37,7 +37,11 @@ exports.createJsonMarkdownPropertyNodes = async ({
 }) => {
   const { createNodeId } = funcs;
   const _remarkTreeNode = cloneDeep(remarkTreeNode);
-  if (!utils.def(objectPath)) objectPath = absolutePath;
+  if (!utils.def(objectPath))
+    objectPath = gatsbyType
+      .charAt(0)
+      .toLowerCase()
+      .concat(gatsbyType.substring(1));
 
   for (const key of Object.keys(treeNode)) {
     if (fieldNameBlacklist.includes(key)) continue;
@@ -56,6 +60,7 @@ exports.createJsonMarkdownPropertyNodes = async ({
         absolutePath,
         gatsbyType,
         leafName: key,
+        objectPath: objectPath.concat(`.${key}Html`),
         markdownRemarkId: markdownRemarkNode.id,
         resolve: utils.htmlResolver(utils.storage, CACHE_KEY_RESOLVER).resolve,
       });
@@ -65,6 +70,18 @@ exports.createJsonMarkdownPropertyNodes = async ({
         leafAction
       );
       utils.storage.set(CACHE_KEY_RESOLVER, newState);
+      // console.log(`\nkey: ${key}`);
+      // console.log(`objectPath.concat(.key): ${objectPath.concat(`.${key}`)}`);
+      // console.log(`treeNode[key]: ${treeNode[key]}`);
+      // console.log(`markdownRemarkNode.id: ${markdownRemarkNode.id}`);
+      // console.log(
+      //   "\x1b[36m%s\x1b[0m",
+      //   `state: ${JSON.stringify(
+      //     utils.storage.get(CACHE_KEY_RESOLVER),
+      //     null,
+      //     "  "
+      //   )}\n`
+      // );
 
       _remarkTreeNode[key.concat("MarkdownRemark___NODE")] =
         markdownRemarkNode.id;
@@ -136,7 +153,6 @@ exports.htmlResolver = (storage, cacheKey) => {
     type: "String",
     resolve: async (source, args, context, info) => {
       const state = storage.get(cacheKey);
-      const index = utils.isNum(info.path.prev.key) ? info.path.prev.key : 0;
       const parentFile = context.nodeModel.getNodeById({
         id: context.nodeModel.findRootNodeAncestor(source).id,
       });
@@ -146,10 +162,12 @@ exports.htmlResolver = (storage, cacheKey) => {
       if (!utils.def(type)) return;
       const field = type[info.fieldName];
       if (!utils.def(field)) return;
-      const markdownRemarkNodeIds = field.mIds;
-      if (!utils.def(markdownRemarkNodeIds)) return;
-      const markdownRemarkNodeId = markdownRemarkNodeIds[index];
-      if (!utils.def(markdownRemarkNodeId)) return;
+
+      const objectPath = utils.pathToArray(info.path);
+      const markdownRemarkNodeId =
+        state?.idsByAbsolutePath?.[parentFile.absolutePath]?.[
+          objectPath.join(".")
+        ];
 
       const resolver = info.schema.getType("MarkdownRemark").getFields()["html"]
         .resolve;
@@ -163,41 +181,53 @@ exports.htmlResolver = (storage, cacheKey) => {
   };
 };
 
+exports.pathToArray = (path) => {
+  const flattened = [];
+  let curr = path;
+
+  while (curr) {
+    flattened.push(curr.key);
+    curr = curr.prev;
+  }
+
+  return flattened.reverse();
+};
+
 exports.isNum = (key) => {
   return !isNaN(parseInt(key, 10)) && isFinite(key);
 };
 
 exports.def = (x) => x !== null && typeof x !== "undefined";
 
-exports.resolverReducer = produce((draft, action) => {
-  const bp = (d, p) => (utils.def(d[p]) ? d[p] : (d[p] = {}));
-  const ar = (i, n) => {
-    const _a = [];
-    _a[i] = n;
-    return _a;
-  };
-  const bl = (l, resolve, i, n) =>
-    utils.def(l.mIds)
-      ? (l.mIds[i] = n)
-      : ((l.type = "String"), (l.mIds = ar(i, n)), (l.resolve = resolve));
+exports.resolverReducer = produce(
+  (draft, action) => {
+    const bp = (d, p) => (utils.def(d[p]) ? d[p] : (d[p] = {}));
 
-  switch (action.type) {
-    case ADD_LEAF:
-      bl(
-        bp(
-          bp(bp(draft, action.absolutePath), action.gatsbyType),
-          action.leafName
-        ),
-        action.resolve,
-        action.index,
-        action.markdownRemarkId
-      );
-      break;
-    case REMOVE_PATH: {
-      delete draft[action.absolutePath];
+    switch (action.type) {
+      case ADD_LEAF:
+        bp(bp(draft, "idsByAbsolutePath"), action.absolutePath)[
+          action.objectPath
+        ] = action.markdownRemarkId;
+        if (
+          !draft?.[action.absolutePath]?.[action.gatsbyType]?.[action.leafName]
+        ) {
+          const leaf = bp(
+            bp(bp(draft, action.absolutePath), action.gatsbyType),
+            action.leafName
+          );
+          leaf.type = "String";
+          leaf.resolve = action.resolve;
+        }
+        break;
+      case REMOVE_PATH: {
+        delete draft[action.absolutePath];
+        delete draft.idsByAbsolutePath[action.absolutePath];
+        break;
+      }
     }
-  }
-}, {});
+  },
+  { idsByAbsolutePath: {} }
+);
 
 const required = ([o, ...os], p, f, memo) =>
   utils.def(o) ? required(os, p, f, f(memo, p, o)) : memo;
@@ -228,7 +258,7 @@ exports.createPropNodeId = (p) => {
 };
 
 exports.constructResolvers = (state) => {
-  return Object.keys(state).reduce(
+  return Object.keys(omit(state, ["idsByAbsolutePath"])).reduce(
     (sa, file) =>
       merge(
         sa,
@@ -236,8 +266,7 @@ exports.constructResolvers = (state) => {
           merge(
             (fa[type] = {}),
             Object.keys(state[file][type]).reduce((ta, prop) => {
-              const o = omit(state[file][type][prop], ["mIds"]);
-              ta[prop] = o;
+              ta[prop] = { ...state[file][type][prop] };
               return ta;
             }, {})
           );

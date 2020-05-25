@@ -1,6 +1,6 @@
 const utils = require("./utils");
-const { createContentDigest } = require(`gatsby-core-utils`);
-const { onCreateNode, createResolvers, onPreInit } = require(`./gatsby-node`);
+const { createContentDigest } = require("gatsby-core-utils");
+const { onCreateNode, createResolvers, onPreInit } = require("./gatsby-node");
 const merge = require("lodash.merge");
 const cloneDeep = require("lodash.clonedeep");
 const file1Json = require("./__fixtures__/file1.json");
@@ -36,28 +36,32 @@ const createActions = (storage) => {
   return {
     addLeafAction1: addLeaf({
       absolutePath: "/dir/actionSet1.json",
-      gatsbyType: "ActionSet1Json",
+      gatsbyType: "DirJson",
+      objectPath: "dirJson.leaf1Html",
       leafName: "leaf1",
       markdownRemarkId: "11",
       resolve: utils.htmlResolver(storage, CACHE_KEY_RESOLVER).resolve,
     }),
     addLeafAction2: addLeaf({
       absolutePath: "/dir/actionSet1.json",
-      gatsbyType: "ActionSet1Json",
+      gatsbyType: "DirJson",
+      objectPath: "dirJson.leaf2Html",
       leafName: "leaf2",
       markdownRemarkId: "12",
       resolve: utils.htmlResolver(storage, CACHE_KEY_RESOLVER).resolve,
     }),
     addLeafAction3: addLeaf({
       absolutePath: "/dir/actionSet2.json",
-      gatsbyType: "ActionSet2Json",
+      gatsbyType: "DirJson",
+      objectPath: "dirJson.leaf1Html",
       leafName: "leaf1",
       markdownRemarkId: "21",
       resolve: utils.htmlResolver(storage, CACHE_KEY_RESOLVER).resolve,
     }),
     addLeafAction4: addLeaf({
       absolutePath: "/dir/actionSet2.json",
-      gatsbyType: "ActionSet2Json",
+      gatsbyType: "DirJson",
+      objectPath: "dirJson.leaf3Html",
       leafName: "leaf3",
       markdownRemarkId: "23",
       resolve: utils.htmlResolver(storage, CACHE_KEY_RESOLVER).resolve,
@@ -73,6 +77,7 @@ describe("tests for when resolver is called for excluded path, type, leaf, and i
       absolutePath: "/dir/file1.json",
       gatsbyType: "DirJson",
       leafName: "leaf1",
+      objectPath: "dirJson.leaf1",
       markdownRemarkId: "if this is returned, there is a problem.",
     });
     baseUndefined = cloneDeep(leaf);
@@ -104,15 +109,6 @@ describe("tests for when resolver is called for excluded path, type, leaf, and i
     const id = await setupUndefined(baseUndefined);
     expect(id).toBeUndefined();
   });
-  test("when type[index] doesn't exist in state, return undefined html", async () => {
-    baseUndefined.index = "2";
-    const id = await setupUndefined(baseUndefined);
-    expect(id).toBeUndefined();
-  });
-  test("id should be 'if this is returned, there is a problem.'", async () => {
-    const id = await setupUndefined(baseUndefined);
-    expect(id).toBe("if this is returned, there is a problem.");
-  });
 });
 
 describe("add two leaves each from two files: test properfly formed state shape", () => {
@@ -132,7 +128,17 @@ describe("add two leaves each from two files: test properfly formed state shape"
         result: action.leafName.concat(" compiled html"),
         ...createResolverArguments(
           addLeafAction1WithResolver,
-          action.leafName.concat(" compiled html")
+          action.leafName.concat(" compiled html"),
+          {
+            key: action.leafName,
+            prev: {
+              key: action.gatsbyType
+                .charAt(0)
+                .toLowerCase()
+                .concat(action.gatsbyType.substring(1)),
+              prev: undefined,
+            },
+          }
         ),
       };
       const newResolverState = utils.resolverReducer(
@@ -181,15 +187,19 @@ describe("add two leaves each from two files: test properfly formed state shape"
     );
     const state = {
       ["/dir/actionSet1.json"]: {
-        ActionSet1Json: {
+        DirJson: {
           leaf1Html: {
             type: "String",
-            mIds: ["11"],
           },
           leaf2Html: {
             type: "String",
-            mIds: ["12"],
           },
+        },
+      },
+      idsByAbsolutePath: {
+        ["/dir/actionSet1.json"]: {
+          ["dirJson.leaf1Html"]: "11",
+          ["dirJson.leaf2Html"]: "12",
         },
       },
     };
@@ -271,26 +281,26 @@ describe("create leaves recursively from two json files", () => {
   beforeEach(async () => {
     createNodeFile1 = jest
       .fn()
-      .mockReturnValueOnce([{ id: "k492-ask239-aski3-3i3ks" }])
-      .mockReturnValueOnce([{ id: "1s91-asdf34-bfd4re-asdf32" }])
-      .mockReturnValueOnce([{ id: "d392-as539-as4ki3-a1i3Ab" }])
-      .mockReturnValueOnce([{ id: "3sfgb-df5-es43t-sdf5" }])
-      .mockReturnValueOnce([{ id: "32-ask239-aski3-3i3ks" }])
-      .mockReturnValueOnce([{ id: "vdvf-asdf34-bfd4re-ss" }])
-      .mockReturnValueOnce([{ id: "23ffs-sd4hb-bfd4vfdre-asggdf32" }])
-      .mockReturnValueOnce([{ id: "424gss-df-asklgi3-ghjh" }])
-      .mockReturnValueOnce([{ id: "56uy-gh-bfd4re-sdfg" }]);
+      .mockReturnValueOnce([{ id: "1" }])
+      .mockReturnValueOnce([{ id: "2" }])
+      .mockReturnValueOnce([{ id: "3" }])
+      .mockReturnValueOnce([{ id: "4" }])
+      .mockReturnValueOnce([{ id: "5" }])
+      .mockReturnValueOnce([{ id: "6" }])
+      .mockReturnValueOnce([{ id: "7" }])
+      .mockReturnValueOnce([{ id: "8" }])
+      .mockReturnValueOnce([{ id: "9" }]);
     createNodeFile2 = jest
       .fn()
-      .mockReturnValueOnce([{ id: "file2-k492-ask239-aski3-3i3ks" }])
-      .mockReturnValueOnce([{ id: "file2-1s91-asdf34-bfd4re-asdf32" }])
-      .mockReturnValueOnce([{ id: "file2-thjhj-as539-as4ki3-a1i3Ab" }])
-      .mockReturnValueOnce([{ id: "file2-3sfgb-df5-es43t-sdf5" }])
-      .mockReturnValueOnce([{ id: "file2-hk43-sdfg5u-66dfgh-fg5a" }])
-      .mockReturnValueOnce([{ id: "file2-32-ask239-aski3-3i3ks" }])
-      .mockReturnValueOnce([{ id: "file2-xx5afd-sd4hb-bfd4vfdre-asggdf32" }])
-      .mockReturnValueOnce([{ id: "file2-56uy-gh-bfd4re-sdfg" }])
-      .mockReturnValueOnce([{ id: "file2-5dfg4k-h6745-ry77-jt5" }]);
+      .mockReturnValueOnce([{ id: "11" }])
+      .mockReturnValueOnce([{ id: "12" }])
+      .mockReturnValueOnce([{ id: "13" }])
+      .mockReturnValueOnce([{ id: "14" }])
+      .mockReturnValueOnce([{ id: "15" }])
+      .mockReturnValueOnce([{ id: "16" }])
+      .mockReturnValueOnce([{ id: "17" }])
+      .mockReturnValueOnce([{ id: "18" }])
+      .mockReturnValueOnce([{ id: "19" }]);
     actions = {
       createNodeField: {},
       createParentChildLink: jest.fn(),
@@ -334,8 +344,6 @@ describe("create leaves recursively from two json files", () => {
     };
   });
 
-  afterEach(() => {});
-
   test("resolver state equals expected state", async () => {
     actions.createNode = createNodeFile1;
     const getNode = jest.fn().mockReturnValue(false);
@@ -372,8 +380,8 @@ describe("create leaves recursively from two json files", () => {
     const expectedState = cloneDeep(file1ExpectedState);
     merge(expectedState, file2ExpectedState);
     const resolverState = utils.storage.get(CACHE_KEY_RESOLVER);
-    expect(JSON.stringify(expectedState, null, "  ")).toEqual(
-      JSON.stringify(resolverState, null, "  ")
+    expect(JSON.parse(JSON.stringify(expectedState, null, "  "))).toEqual(
+      JSON.parse(JSON.stringify(resolverState, null, "  "))
     );
     expect(
       resolverState["/dir/file2.json"]["DirJsonSomeObject"][
@@ -398,8 +406,8 @@ describe("create leaves recursively from two json files", () => {
     const state = utils.storage.get(CACHE_KEY_RESOLVER);
     const removeAction = removePath({ absolutePath: "/dir/file2.json" });
     const newState = utils.resolverReducer(state, removeAction);
-    expect(JSON.stringify(newState)).toEqual(
-      JSON.stringify(file1ExpectedState)
+    expect(JSON.parse(JSON.stringify(newState))).toEqual(
+      JSON.parse(JSON.stringify(file1ExpectedState))
     );
     expect(
       state["/dir/file2.json"]["DirJsonSomeObjectSomeArrayOfObjects"][
@@ -425,14 +433,14 @@ describe("create leaves recursively from two json files", () => {
     const state = utils.storage.get(CACHE_KEY_RESOLVER);
     const resolvers = utils.constructResolvers(state);
 
-    expect(JSON.stringify(state, null, "  ")).toEqual(
-      JSON.stringify(expectedState, null, "  ")
+    expect(JSON.parse(JSON.stringify(state, null, "  "))).toEqual(
+      JSON.parse(JSON.stringify(expectedState, null, "  "))
     );
     expect(await createResolvers({ createResolvers: createResolversArg })).toBe(
       undefined
     );
-    expect(JSON.stringify(resolvers, null, "  ")).toEqual(
-      JSON.stringify(expectedResolvers, null, "  ")
+    expect(JSON.parse(JSON.stringify(resolvers, null, "  "))).toEqual(
+      JSON.parse(JSON.stringify(expectedResolvers, null, "  "))
     );
     expect(resolvers.DirJson.content1Html.mIds).toBeUndefined();
   });
@@ -485,7 +493,7 @@ test("non empty path config doesn't log warn in onPreInit", () => {
   expect(reporter.warn.mock.calls.length).toBe(0);
 });
 
-const createResolverArguments = (action, result) => {
+const createResolverArguments = (action, result, path) => {
   const mockSource = {};
   const mockContext = {
     nodeModel: {
@@ -496,7 +504,7 @@ const createResolverArguments = (action, result) => {
     },
   };
   const mockInfo = {
-    path: { prev: { key: action.index } },
+    path: path,
     schema: {
       getType: jest.fn().mockReturnValue({
         getFields: jest.fn().mockReturnValue({

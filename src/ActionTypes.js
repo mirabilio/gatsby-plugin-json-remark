@@ -9,6 +9,7 @@ const addLeaf = ({
   index = 0,
   leafName,
   leafType = "String",
+  objectPath,
   markdownRemarkId,
   resolve,
 }) => {
@@ -20,6 +21,7 @@ const addLeaf = ({
     leafNameSource: leafName,
     leafName: leafName.concat("Html"),
     leafType,
+    objectPath,
     markdownRemarkId,
     resolve,
   };
