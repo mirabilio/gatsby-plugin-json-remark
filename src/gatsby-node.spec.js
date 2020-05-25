@@ -69,7 +69,7 @@ const createActions = (storage) => {
   };
 };
 
-describe("tests for when resolver is called for excluded path, type, leaf, and index", () => {
+describe("tests for when resolver is called for excluded path, type, leaf", () => {
   let baseUndefined;
   let leaf;
   beforeEach(async () => {
@@ -89,6 +89,7 @@ describe("tests for when resolver is called for excluded path, type, leaf, and i
     );
     utils.storage.set(CACHE_KEY_RESOLVER, state);
     const args = createResolverArguments(undefProp, undefProp.markdownRemarkId);
+
     return await utils
       .htmlResolver(utils.storage, CACHE_KEY_RESOLVER)
       .resolve(args.mockSource, {}, args.mockContext, args.mockInfo);
@@ -497,9 +498,14 @@ const createResolverArguments = (action, result, path) => {
   const mockSource = {};
   const mockContext = {
     nodeModel: {
-      getNodeById: jest
-        .fn()
-        .mockReturnValue({ absolutePath: action.absolutePath }),
+      getNodeById: jest.fn().mockReturnValue({
+        absolutePath: action.absolutePath,
+        internal: {
+          owner: PLUGIN_NAME_JSON_TRANSFORMER,
+          type: action.gatsbyType,
+        },
+        children: [],
+      }),
       findRootNodeAncestor: jest.fn().mockReturnValue({ id: "" }),
     },
   };

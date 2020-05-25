@@ -8,6 +8,7 @@ const {
   NODE_TYPE_JSON_REMARK_PROPERTY,
   MEDIA_TYPE_TEXT_MARKDOWN,
   CACHE_KEY_RESOLVER,
+  PLUGIN_NAME_JSON_TRANSFORMER,
 } = require("./constants");
 const utils = require("./utils");
 
@@ -70,18 +71,6 @@ exports.createJsonMarkdownPropertyNodes = async ({
         leafAction
       );
       utils.storage.set(CACHE_KEY_RESOLVER, newState);
-      // console.log(`\nkey: ${key}`);
-      // console.log(`objectPath.concat(.key): ${objectPath.concat(`.${key}`)}`);
-      // console.log(`treeNode[key]: ${treeNode[key]}`);
-      // console.log(`markdownRemarkNode.id: ${markdownRemarkNode.id}`);
-      // console.log(
-      //   "\x1b[36m%s\x1b[0m",
-      //   `state: ${JSON.stringify(
-      //     utils.storage.get(CACHE_KEY_RESOLVER),
-      //     null,
-      //     "  "
-      //   )}\n`
-      // );
 
       _remarkTreeNode[key.concat("MarkdownRemark___NODE")] =
         markdownRemarkNode.id;
@@ -156,6 +145,15 @@ exports.htmlResolver = (storage, cacheKey) => {
       const parentFile = context.nodeModel.getNodeById({
         id: context.nodeModel.findRootNodeAncestor(source).id,
       });
+      const parentJsonType = context.nodeModel.getNodeById({
+        id: parentFile.children.find((child) => {
+          const c = context.nodeModel.getNodeById({ id: child });
+          return (
+            utils.def(c) && c.internal.owner === PLUGIN_NAME_JSON_TRANSFORMER
+          );
+        }),
+      }).internal.type;
+
       const path = state[parentFile.absolutePath];
       if (!utils.def(path)) return;
       const type = path[info.parentType.name];
@@ -164,6 +162,10 @@ exports.htmlResolver = (storage, cacheKey) => {
       if (!utils.def(field)) return;
 
       const objectPath = utils.pathToArray(info.path);
+      objectPath[0] = parentJsonType
+        .charAt(0)
+        .toLowerCase()
+        .concat(parentJsonType.substring(1));
       const markdownRemarkNodeId =
         state?.idsByAbsolutePath?.[parentFile.absolutePath]?.[
           objectPath.join(".")
@@ -228,34 +230,6 @@ exports.resolverReducer = produce(
   },
   { idsByAbsolutePath: {} }
 );
-
-const required = ([o, ...os], p, f, memo) =>
-  utils.def(o) ? required(os, p, f, f(memo, p, o)) : memo;
-
-exports.createPropNodeId = (p) => {
-  p.index = utils.def(p.index) ? p.index : 0;
-  const missing = required(
-    [
-      "wholeTree",
-      "jsonNodeId",
-      "nodeType",
-      "absolutePath",
-      "gatsbyType",
-      "index",
-      "key",
-    ],
-    p,
-    (memo, p, o) => (!utils.def(p[o]) ? [...memo, o] : memo),
-    []
-  );
-  if (missing.length > 0)
-    throw new Error(
-      `Required field(s) for node ID generation are missing: ${missing.join(
-        ", "
-      )}`
-    );
-  return `${p.wholeTree} ${p.jsonNodeId} ${p.nodeType} ${p.absolutePath} ${p.gatsbyType} ${p.index} ${p.key}`;
-};
 
 exports.constructResolvers = (state) => {
   return Object.keys(omit(state, ["idsByAbsolutePath"])).reduce(

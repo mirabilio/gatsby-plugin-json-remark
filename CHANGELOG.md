@@ -1,9 +1,8 @@
 ## [1.1.3](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.1.2...v1.1.3) (2020-05-25)
 
-
 ### Bug Fixes
 
-* **babel:** babel config to transpile ([a5442ac](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/a5442acddbcd2700e725040226fcd3f398196313)), closes [#9](https://github.com/mirabilio/gatsby-plugin-json-remark/issues/9)
+- **babel:** babel config to transpile ([a5442ac](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/a5442acddbcd2700e725040226fcd3f398196313)), closes [#9](https://github.com/mirabilio/gatsby-plugin-json-remark/issues/9)
 
 ## [1.1.2](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.1.1...v1.1.2) (2020-05-25)
 

@@ -32,6 +32,7 @@
     "@semantic-release/git": "^9.0.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.0.1",
+    "babel-preset-minify": "^0.5.1",
     "codecov": "^3.6.5",
     "cross-env": "^7.0.2",
     "cz-conventional-changelog": "3.1.0",
@@ -53,7 +54,7 @@
   },
   "scripts": {
     "dev": "yarn build && yarn unlink && yarn link",
-    "test": "jest",
+    "test": "jest --coverage",
     "test-watch": "jest --watchAll",
     "test-watch-coverage": "jest --watchAll --coverage",
     "build": "babel src --out-dir ./ && yarn prettier",
