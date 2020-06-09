@@ -1,6 +1,6 @@
 const isEmpty = require("lodash.isempty");
 const { resolverReducerAndStore, constructResolvers } = require("./core");
-const { getState } = require("./cache");
+const { getState, clear } = require("./cache");
 const { createContentDigest } = require("gatsby-core-utils");
 const { onCreateNode, createResolvers, onPreInit } = require("./gatsby-node");
 
@@ -27,6 +27,7 @@ let cache;
 
 beforeEach(() => {
   cache = new Map();
+  clear();
 });
 
 describe("create leaves recursively from two json files", () => {
@@ -183,6 +184,7 @@ describe("create leaves recursively from two json files", () => {
       createNodeId,
       createParentChildLink: {},
       createContentDigest,
+      createResolvers: jest.fn(),
       getNodesByType,
       actions,
       reporter,
@@ -195,6 +197,7 @@ describe("create leaves recursively from two json files", () => {
       createNodeId,
       createParentChildLink: {},
       createContentDigest,
+      createResolvers: jest.fn(),
       getNodesByType,
       actions,
       reporter,
@@ -257,11 +260,17 @@ describe("create leaves recursively from two json files", () => {
   });
 
   test("reject node if node isn't owned by transformer-json ", async () => {
+    console.log(
+      `state!!: ${JSON.stringify(getState({ cache, reporter }), null, "  ")}`
+    );
     nodeApiArgsNode1.node.internal.owner = "not transformer-json";
     await onCreateNode(nodeApiArgsNode1, {
       fieldNameBlacklist,
       paths: ["/dir"],
     });
+    console.log(
+      `state: ${JSON.stringify(getState({ cache, reporter }), null, "  ")}`
+    );
     expect(isEmpty(getState({ cache, reporter }))).toBe(true);
   });
 

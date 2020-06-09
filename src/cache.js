@@ -4,10 +4,10 @@ const isUndefined = require("lodash.isundefined");
 
 const _stateCache = new Map(); // internal storage for production env
 
-const clearStateCache = () => {
+const clear = () => {
   _stateCache.clear();
 };
-exports.clearStateCache = clearStateCache;
+exports.clear = clear;
 
 // if local state is empty, check cache if non-dev env
 const getState = ({ cache, reporter }) => {
