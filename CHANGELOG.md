@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.1.4...v1.1.5) (2020-06-09)
+
+
+### Bug Fixes
+
+* **core:** add build caching ([1843fe9](https://github.com/mirabilio/gatsby-plugin-json-remark/commit/1843fe911ef9e89775783de1b12a4e420cc4ef62)), closes [#8](https://github.com/mirabilio/gatsby-plugin-json-remark/issues/8)
+
 ## [1.1.4](https://github.com/mirabilio/gatsby-plugin-json-remark/compare/v1.1.3...v1.1.4) (2020-05-25)
 
 ### Bug Fixes
