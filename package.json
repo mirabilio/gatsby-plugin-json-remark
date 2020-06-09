@@ -18,11 +18,13 @@
   "author": "Pat Nolan",
   "license": "MIT",
   "dependencies": {
-    "immer": "^6.0.3",
+    "chalk": "^4.0.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isempty": "^4.4.0",
+    "lodash.isundefined": "^3.0.1",
     "lodash.merge": "^4.6.2",
-    "lodash.omit": "^4.5.0"
+    "lodash.omit": "^4.5.0",
+    "lodash.without": "^4.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -75,6 +77,9 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "version": "1.1.4"
 }

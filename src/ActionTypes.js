@@ -11,11 +11,14 @@ const addLeaf = ({
   leafType = "String",
   objectPath,
   markdownRemarkId,
-  resolve,
 }) => {
   return {
     type: ADD_LEAF,
     absolutePath,
+    baseExcerpt:
+      absolutePath.length < 11
+        ? absolutePath
+        : `[...] ${absolutePath.substring(absolutePath.length - 25)}`,
     gatsbyType,
     index,
     leafNameSource: leafName,
@@ -23,7 +26,6 @@ const addLeaf = ({
     leafType,
     objectPath,
     markdownRemarkId,
-    resolve,
   };
 };
 const removePath = ({ absolutePath }) => {

@@ -1,21 +1,47 @@
 {
-  "content1": "**file1.content1**",
-  "content2": "**file1.content2**",
-  "someObject": {
-    "content1": "**file1SomeObject.content1**",
-    "someObject": {
-      "content1": "**file1SomeObjectSomeObject.content1**"
+  "path": "/about1",
+  "arr0": [
+    {
+      "content0": "content0: 1-0",
+      "arr1": [
+        {
+          "arr1Content": "arr1Content: 1-0-0"
+        },
+        {
+          "arr1Content": "arr1Content: 1-0-1"
+        },
+        {
+          "arr1Content": "arr1Content: 1-0-2"
+        }
+      ]
     },
-    "someArrayOfObjects": [
-      {
-        "content1": "**file1SomeObjectSomeArrayOfObjects.content1**",
-        "content2": "**file1SomeObjectSomeArrayOfObjects.content2**",
-        "content3": "**file1SomeObjectSomeArrayOfObjects.content3**"
-      },
-      {
-        "content1": "**file1SomeObjectSomeArrayOfObjects.content1**",
-        "content2": "**file1SomeObjectSomeArrayOfObjects.content2**"
-      }
-    ]
-  }
+    {
+      "content0": "content0: 1-1",
+      "arr1": [
+        {
+          "arr1Content": "arr1Content: 1-1-0"
+        },
+        {
+          "arr1Content": "arr1Content: 1-1-1"
+        }
+      ]
+    },
+    {
+      "content0": "content0: 1-2",
+      "arr1": [
+        {
+          "arr1Content": "arr1Content: 1-2-0"
+        },
+        {
+          "arr1Content": "arr1Content: 1-2-1"
+        },
+        {
+          "arr1Content": "arr1Content: 1-2-2"
+        },
+        {
+          "arr1Content": "arr1Content: 1-2-3"
+        }
+      ]
+    }
+  ]
 }

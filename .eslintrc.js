@@ -23,8 +23,10 @@ module.exports = {
     "object-curly-spacing": 0,
     quotes: 0,
     semi: 0,
-    "no-unused-expressions": 0,
+    "no-unused-expressions": "warn",
+    "no-unused-vars": "warn",
     "valid-typeof": 0,
+    "require-await": "error",
 
     "babel/new-cap": 1,
     "babel/camelcase": 0,
@@ -33,6 +35,8 @@ module.exports = {
     "babel/semi": 1,
     "babel/no-unused-expressions": 1,
     "babel/valid-typeof": 1,
+
+    "jest/no-commented-out-tests": 0,
   },
   parser: "babel-eslint",
   parserOptions: {

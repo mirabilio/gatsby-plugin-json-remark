@@ -2,7 +2,8 @@ module.exports = {
   testEnvironment: "node",
   // transformIgnorePatterns: ["/node_modules/", "/src/", "/src/fixtures/*"],
   transformIgnorePatterns: [
-    "src/utils.spec.js",
+    "src/util.spec.js",
+    "src/core.spec.js",
     "src/gatsby-node.spec.js",
     "src/__fixtures__/*",
     // "/src/",

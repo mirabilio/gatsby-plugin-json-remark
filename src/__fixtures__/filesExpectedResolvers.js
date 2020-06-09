@@ -1,42 +1,16 @@
-module.exports = {
+exports.resolvers = {
+  DirJsonArr0: {
+    content0Html: {
+      type: "String",
+    },
+  },
+  DirJsonArr0Arr1: {
+    arr1ContentHtml: {
+      type: "String",
+    },
+  },
   DirJson: {
-    content1Html: {
-      type: "String",
-    },
-    content2Html: {
-      type: "String",
-    },
-    content3Html: {
-      type: "String",
-    },
-  },
-  DirJsonSomeObject: {
-    content1Html: {
-      type: "String",
-    },
-    content2Html: {
-      type: "String",
-    },
-  },
-  DirJsonSomeObjectSomeObject: {
-    content1Html: {
-      type: "String",
-    },
-    content3Html: {
-      type: "String",
-    },
-  },
-  DirJsonSomeObjectSomeArrayOfObjects: {
-    content1Html: {
-      type: "String",
-    },
-    content2Html: {
-      type: "String",
-    },
-    content3Html: {
-      type: "String",
-    },
-    content4Html: {
+    contentHtml: {
       type: "String",
     },
   },
