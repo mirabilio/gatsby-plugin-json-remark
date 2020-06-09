@@ -1,17 +1,9 @@
 const isEmpty = require("lodash.isempty");
-const {
-  htmlResolver,
-  resolverReducerAndStore,
-  createJsonMarkdownPropertyNodes,
-  constructResolvers,
-  getResolvers,
-} = require("./core");
-const { setState, getState, clearStateCache } = require("./cache");
+const { resolverReducerAndStore, constructResolvers } = require("./core");
+const { getState } = require("./cache");
 const { createContentDigest } = require("gatsby-core-utils");
 const { onCreateNode, createResolvers, onPreInit } = require("./gatsby-node");
 
-const merge = require("lodash.merge");
-const cloneDeep = require("lodash.clonedeep");
 const file0Json = require("./__fixtures__/file0.json");
 const file1Json = require("./__fixtures__/file1.json");
 
@@ -25,15 +17,12 @@ const {
   state: filesExpectedState,
 } = require("./__fixtures__/filesExpectedState.js");
 const expectedResolvers = require("./__fixtures__/filesExpectedResolvers");
-const file1ExpectedMarkdownTree = require("./__fixtures__/file1ExpectedMarkdownTree");
-const file2ExpectedMarkdownTree = require("./__fixtures__/file2ExpectedMarkdownTree");
-const { removePath, addLeaf } = require("./ActionTypes");
+const { removePath } = require("./ActionTypes");
 const {
   PLUGIN_NAME_JSON_TRANSFORMER,
   PLUGIN_NAME_SOURCE_FILESYSTEM,
 } = require("./constants");
 
-let state;
 let cache;
 
 beforeEach(() => {
@@ -70,7 +59,6 @@ describe("create leaves recursively from two json files", () => {
       owner: PLUGIN_NAME_JSON_TRANSFORMER,
     },
   };
-  const createResolversArg = jest.fn().mockReturnValue("1");
 
   beforeEach(() => {
     const getId = (content) => {
