@@ -52,7 +52,7 @@
     "prettier": "^2.0.2",
     "remark-cli": "^7.0.1",
     "remark-preset-lint-recommended": "^3.0.4",
-    "semantic-release": "^17.0.4"
+    "semantic-release": "^17.2.3"
   },
   "scripts": {
     "dev": "yarn build && yarn unlink && yarn link",
